@@ -17,29 +17,29 @@ const CONFIG = {
     MAX: 3
   },
 
-  // Ígneo (Jugador - Parte Superior)
+  // Ígneo (Jugador - Parte Inferior)
   IGNEO: {
     PADDLE_WIDTH: 115,
     VISUAL_HEIGHT: 120,
-    Y_CENTER: 80, // Distancia desde la parte superior
+    Y_CENTER: 770, // Distancia desde la parte inferior
     MOVE_SPEED: 560, // Velocidad máxima con teclado (px/s)
     ACCELERATION: 3600,
     FRICTION: 0.82,
     HITBOX_HEIGHT: 26,
-    HITBOX_Y_OFFSET: 36 // Zona de impacto en los pies/manos de Ígneo
+    HITBOX_Y_OFFSET: -36 // Zona de impacto hacia el centro de la arena
   },
 
-  // Flora (Bot / Oponente - Parte Inferior)
+  // Flora (Bot / Oponente - Parte Superior)
   FLORA: {
     PADDLE_WIDTH: 115,
     VISUAL_HEIGHT: 120,
-    Y_CENTER: 770, // Distancia cerca del fondo
+    Y_CENTER: 80, // Distancia desde la parte superior
     MOVE_SPEED: 410, // Velocidad limitada (dificultad media balanceada)
     REACTION_DELAY: 0.12, // Retardo de reacción en segundos
     SMOOTHING: 0.14, // Suavizado de seguimiento
     ERROR_MARGIN_MAX: 28, // Margen de error en píxeles para permitir fallos realistas
     HITBOX_HEIGHT: 26,
-    HITBOX_Y_OFFSET: -36 // Zona de impacto en la cabeza/manos de Flora
+    HITBOX_Y_OFFSET: 36 // Zona de impacto hacia el centro de la arena
   },
 
   // Bola de Energía Roja
@@ -47,6 +47,7 @@ const CONFIG = {
     RADIUS: 11,
     INITIAL_SPEED: 420, // Velocidad moderada al inicio
     SPEED_INCREMENT: 16, // Aumento gradual por rebote
+    SPEED_RAMP_PER_SECOND: 10, // Aumento continuo mientras la bola está en juego
     MAX_SPEED: 760, // Límite máximo para mantener el juego jugable
     MAX_BOUNCE_ANGLE: 58 * (Math.PI / 180), // Ángulo máximo de rebote (58 grados)
     MIN_VERTICAL_SPEED_RATIO: 0.35 // Garantiza que no se mueva puramente horizontal

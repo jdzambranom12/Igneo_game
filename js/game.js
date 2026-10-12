@@ -206,7 +206,7 @@ class RedEnergyBall {
 
     // Ángulo de saque con ligera inclinación aleatoria
     const angleOffset = (Math.random() - 0.5) * 0.6; // Entre -17 y +17 grados
-    const baseAngle = serveTowardsFlora ? Math.PI / 2 : -Math.PI / 2;
+    const baseAngle = serveTowardsFlora ? -Math.PI / 2 : Math.PI / 2;
     const finalAngle = baseAngle + angleOffset;
 
     this.vx = Math.cos(finalAngle) * this.speed;
@@ -219,6 +219,15 @@ class RedEnergyBall {
 
   update(dt) {
     if (!this.inPlay) return;
+
+    const nextSpeed = Math.min(
+      CONFIG.BALL.MAX_SPEED,
+      this.speed + CONFIG.BALL.SPEED_RAMP_PER_SECOND * dt
+    );
+    const speedScale = nextSpeed / this.speed;
+    this.vx *= speedScale;
+    this.vy *= speedScale;
+    this.speed = nextSpeed;
 
     this.pulseTime += dt * 8;
     this.x += this.vx * dt;
@@ -391,7 +400,7 @@ class GameEngine {
     this.player.reset();
     this.bot.reset();
     this.bot.setRound(this.round);
-    this._resetBall(true);
+    this._resetBall(true, false);
 
     this.pauseTimer = CONFIG.TIMINGS.SERVE_DELAY;
     this.pauseReason = 'serve';
@@ -412,9 +421,10 @@ class GameEngine {
     }
   }
 
-  _resetBall(serveTowardsFlora) {
+  _resetBall(serveTowardsFlora, preserveSpeed = true) {
     const lostBotLives = CONFIG.LIVES.INITIAL - this.botLives;
-    const speed = CONFIG.BALL.INITIAL_SPEED + lostBotLives * 50;
+    const roundSpeed = CONFIG.BALL.INITIAL_SPEED + lostBotLives * 50;
+    const speed = preserveSpeed ? Math.max(roundSpeed, this.ball.speed) : roundSpeed;
     this.ball.reset(serveTowardsFlora, speed);
   }
 
@@ -502,8 +512,8 @@ class GameEngine {
       particleSystem.addImpactSparks(ball.x, ball.y, 8, true);
     }
 
-    // B. Colisión con la paleta de ÍGNEO (Parte Superior - Jugador)
-    if (ball.vy < 0) {
+    // B. Colisión con la paleta de ÍGNEO (Parte Inferior - Jugador)
+    if (ball.vy > 0) {
       const pBox = this.player.getHitbox();
       // Verificación de intersección en caja delimitadora
       if (
@@ -513,7 +523,7 @@ class GameEngine {
         ball.y + ball.radius >= pBox.top
       ) {
         // Colisión válida confirmada
-        ball.y = pBox.bottom + ball.radius; // Corregir penetración
+        ball.y = pBox.top - ball.radius; // Corregir penetración
 
         // Calcular ángulo de rebote según el punto de impacto
         const relativeHit = (ball.x - this.player.x) / (this.player.width / 2);
@@ -523,9 +533,9 @@ class GameEngine {
         // Aumentar velocidad progresivamente respetando límite
         ball.speed = Math.min(CONFIG.BALL.MAX_SPEED, ball.speed + CONFIG.BALL.SPEED_INCREMENT);
 
-        // Desviar hacia abajo (hacia Flora)
+        // Desviar hacia arriba (hacia Flora)
         ball.vx = Math.sin(bounceAngle) * ball.speed;
-        ball.vy = Math.cos(bounceAngle) * ball.speed;
+        ball.vy = -Math.cos(bounceAngle) * ball.speed;
 
         // Efectos y animaciones
         this.player.triggerHitAnimation();
@@ -557,8 +567,8 @@ class GameEngine {
       }
     }
 
-    // C. Colisión con la paleta de FLORA (Parte Inferior - Bot)
-    if (ball.vy > 0) {
+    // C. Colisión con la paleta de FLORA (Parte Superior - Bot)
+    if (ball.vy < 0) {
       const fBox = this.bot.getHitbox();
       if (
         ball.x + ball.radius >= fBox.left &&
@@ -566,7 +576,7 @@ class GameEngine {
         ball.y + ball.radius >= fBox.top &&
         ball.y - ball.radius <= fBox.bottom
       ) {
-        ball.y = fBox.top - ball.radius; // Corregir penetración
+        ball.y = fBox.bottom + ball.radius; // Corregir penetración
 
         const relativeHit = (ball.x - this.bot.x) / (this.bot.width / 2);
         const clampedHit = Math.max(-1, Math.min(1, relativeHit));
@@ -574,9 +584,9 @@ class GameEngine {
 
         ball.speed = Math.min(CONFIG.BALL.MAX_SPEED, ball.speed + CONFIG.BALL.SPEED_INCREMENT);
 
-        // Desviar hacia arriba (hacia Ígneo)
+        // Desviar hacia abajo (hacia Ígneo)
         ball.vx = Math.sin(bounceAngle) * ball.speed;
-        ball.vy = -Math.cos(bounceAngle) * ball.speed;
+        ball.vy = Math.cos(bounceAngle) * ball.speed;
 
         this.bot.triggerHitAnimation();
         soundManager.playFloraHit(1 + Math.min(0.4, this.rallyCount * 0.02));
@@ -585,15 +595,15 @@ class GameEngine {
       }
     }
 
-    // D. FALLO DE ÍGNEO (La bola supera la línea superior de la arena)
+    // D. FALLO DE FLORA (La bola supera la línea superior de la arena)
     if (ball.y < -20) {
-      this._onIgneoMiss();
+      this._onFloraMiss();
       return;
     }
 
-    // E. FALLO DE FLORA (La bola supera la línea inferior de la arena)
+    // E. FALLO DE ÍGNEO (La bola supera la línea inferior de la arena)
     if (ball.y > CONFIG.COURT.HEIGHT + 20) {
-      this._onFloraMiss();
+      this._onIgneoMiss();
       return;
     }
   }

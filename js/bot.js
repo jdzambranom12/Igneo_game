@@ -80,7 +80,7 @@ class FloraBot {
     }
 
     // 2. Lógica de seguimiento de la bola
-    const isBallApproaching = ball.vy > 0;
+    const isBallApproaching = ball.vy < 0;
 
     if (isBallApproaching) {
       this.reactionTimer -= dt;
