@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Ígneo: Pong de Fuego - Videojuego Transmedia</title>
+  <meta name="description" content="Videojuego arcade inspirado en Pong con Ígneo y Flora en una emocionante arena volcánica de fuego.">
+  
+  <!-- Estilos -->
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/ui.css">
+  <link rel="stylesheet" href="css/game.css">
+</head>
+<body>
+
+  <div id="app-container">
+
+    <!-- ====================================================================
+         1. PANTALLA DE INICIO
+         ==================================================================== -->
+    <section id="screen-start" class="screen">
+      <div class="card start-card animate-pop">
+        
+        <!-- Identificador de Colección -->
+        <div class="badge-collection">
+          <span>🔥</span> COLECCIÓN TRANSMEDIA
+        </div>
+
+        <h1 class="game-title">Ígneo: Pong de Fuego</h1>
+        <p class="game-subtitle">El duelo definitivo en la arena volcánica</p>
+
+        <!-- Duelo Visual: Ígneo vs Flora -->
+        <div class="versus-container">
+          <div class="versus-fighter">
+            <div class="fighter-avatar-wrap animate-float">
+              <img src="assets/igneo/igneo_idle.png" alt="Ígneo - Niño Fuego" class="fighter-img">
+            </div>
+            <span class="fighter-name" style="color: #ff7043;">ÍGNEO</span>
+            <span class="fighter-role">Tú (Arriba)</span>
+          </div>
+
+          <div class="versus-badge">VS</div>
+
+          <div class="versus-fighter">
+            <div class="fighter-avatar-wrap flora-wrap animate-float" style="animation-delay: -1.5s;">
+              <img src="assets/flora/flora_idle.png" alt="Flora - Oponente Bot" class="fighter-img">
+            </div>
+            <span class="fighter-name" style="color: #81c784;">FLORA</span>
+            <span class="fighter-role">Bot (Abajo)</span>
+          </div>
+        </div>
+
+        <!-- Resumen Rápido de Reglas -->
+        <div class="mini-rules">
+          <div class="rule-pill">
+            <span class="rule-icon">🔥</span>
+            <span>Exactamente</span>
+            <strong>3 Vidas</strong>
+          </div>
+          <div class="rule-pill">
+            <span class="rule-icon">🔴</span>
+            <span>Una única bola de</span>
+            <strong>Energía Roja</strong>
+          </div>
+          <div class="rule-pill">
+            <span class="rule-icon">🌋</span>
+            <span>Devuelve y logra el</span>
+            <strong>Mayor Récord</strong>
+          </div>
+        </div>
+
+        <!-- Entrada de Nombre del Jugador -->
+        <div class="input-group">
+          <label for="player-name-input" class="input-label">ESCRIBE TU NOMBRE</label>
+          <input
+            type="text"
+            id="player-name-input"
+            class="input-name"
+            placeholder="TU NOMBRE..."
+            maxlength="16"
+            autocomplete="off"
+            spellcheck="false"
+          />
+        </div>
+
+        <!-- Botones Principales -->
+        <div class="btn-group">
+          <button id="btn-play-start" class="btn btn-primary">
+            <span>🔥</span> ¡JUGAR!
+          </button>
+          <button id="btn-leaderboard-start" class="btn btn-secondary">
+            <span>🏆</span> MEJORES PUNTAJES
+          </button>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         2. PANTALLA DE JUEGO (GAMEPLAY)
+         ==================================================================== -->
+    <section id="screen-gameplay" class="screen hidden">
+      
+      <!-- HUD Superior -->
+      <header class="game-hud">
+        <div class="hud-left">
+          <div class="hud-badge">
+            <span class="hud-label">JUGADOR:</span>
+            <span id="hud-player-name" class="hud-value" style="color: #ffab40;">ÍGNEO</span>
+          </div>
+          <div class="hud-badge">
+            <span class="hud-label">PUNTOS:</span>
+            <span id="hud-score" class="hud-value">0</span>
+            <span id="hud-multiplier" class="combo-badge">x1</span>
+          </div>
+        </div>
+
+        <div class="hud-center">
+          <div class="hud-badge">
+            <span class="hud-label">RONDA:</span>
+            <span id="hud-round" class="hud-value">1/3</span>
+          </div>
+          <!-- Exactamente tres iconos de vidas -->
+          <div class="hud-badge lives-box" title="Vidas de Ígneo (3 vidas exactas)">
+            <span class="hud-label">VIDAS:</span>
+            <span id="life-1" class="life-flame">🔥</span>
+            <span id="life-2" class="life-flame">🔥</span>
+            <span id="life-3" class="life-flame">🔥</span>
+          </div>
+          <div class="hud-badge lives-box" title="Vidas de Flora (3 vidas exactas)">
+            <span class="hud-label">FLORA:</span>
+            <span id="bot-life-1" class="bot-life">🌿</span>
+            <span id="bot-life-2" class="bot-life">🌿</span>
+            <span id="bot-life-3" class="bot-life">🌿</span>
+          </div>
+        </div>
+
+        <div class="hud-right">
+          <button id="btn-mute-toggle" class="hud-btn" title="Silenciar o activar sonido">🔊</button>
+          <button id="btn-pause-toggle" class="hud-btn" title="Pausar juego">⏸️</button>
+        </div>
+      </header>
+
+      <!-- Indicador Táctil para Dispositivos Móviles -->
+      <div class="mobile-touch-hint">👆 Desliza horizontalmente para mover a Ígneo</div>
+
+      <!-- Lienzo Principal Interactivo -->
+      <div class="canvas-container">
+        <canvas id="pong-canvas"></canvas>
+      </div>
+
+      <!-- Notificación Flotante en Pantalla -->
+      <div id="floating-banner" class="floating-banner">¡PREPÁRATE!</div>
+
+      <!-- Modal de Pausa -->
+      <div id="modal-pause" class="modal-overlay hidden">
+        <div class="card animate-pop">
+          <h2 class="game-title" style="font-size: 1.8rem;">JUEGO EN PAUSA</h2>
+          <p class="game-description">Tómate un respiro antes de continuar el duelo de fuego.</p>
+          <div class="btn-group">
+            <button id="btn-resume-pause" class="btn btn-primary">CONTINUAR</button>
+            <button id="btn-quit-pause" class="btn btn-secondary">SALIR AL MENÚ</button>
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- ====================================================================
+         3. PANTALLA DE DERROTA (GAME OVER)
+         ==================================================================== -->
+    <section id="screen-gameover" class="screen hidden">
+      <div class="card result-card animate-pop">
+        
+        <div id="result-new-record" class="result-badge-record hidden">
+          ⭐ ¡NUEVO RÉCORD! ⭐
+        </div>
+
+        <h2 id="result-title" class="game-title" style="font-size: 2rem;">¡Fin de la partida!</h2>
+        <p id="result-subtitle" class="game-subtitle">Tus tres llamas se han extinguido</p>
+
+        <!-- Visual de Fin de Partida -->
+        <div class="versus-fighter">
+          <div class="fighter-avatar-wrap" style="width: 120px; height: 130px;">
+            <img src="assets/igneo/igneo_shocked.png" alt="Ígneo Derrotado" class="fighter-img">
+          </div>
+        </div>
+
+        <!-- Puntuación Final -->
+        <div class="result-score-highlight">
+          <span class="label">PUNTUACIÓN FINAL</span>
+          <span id="result-score-val" class="val">0</span>
+        </div>
+
+        <!-- Estadísticas de la Partida -->
+        <div class="result-stats-row">
+          <div>Rebotes seguidos: <strong id="result-rally-val" style="color: #ffcc80;">0</strong></div>
+          <div>Mejor Combo: <strong id="result-combo-val" style="color: #ffeb3b;">x1</strong></div>
+        </div>
+
+        <!-- Tres Opciones Obligatorias -->
+        <div class="btn-group">
+          <button id="btn-play-again" class="btn btn-primary">
+            <span>🔄</span> VOLVER A JUGAR
+          </button>
+          <button id="btn-leaderboard-result" class="btn btn-secondary">
+            <span>🏆</span> MEJORES PUNTAJES
+          </button>
+          <button id="btn-menu-result" class="btn btn-secondary">
+            <span>🏠</span> MENÚ PRINCIPAL
+          </button>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         4. PANTALLA DE MEJORES PUNTAJES (LEADERBOARD)
+         ==================================================================== -->
+    <section id="screen-leaderboard" class="screen hidden">
+      <div class="card leaderboard-card animate-pop">
+        
+        <h2 class="game-title" style="font-size: 1.9rem;">MEJORES PUNTAJES</h2>
+        <p class="game-subtitle">Los maestros de la llama incandescente</p>
+
+        <!-- Tabla Dinámica de Clasificación -->
+        <div id="leaderboard-list-container" class="leaderboard-table-wrap">
+          <!-- Renderizado dinámico desde storage.js -->
+        </div>
+
+        <!-- Botón de Retorno -->
+        <div class="btn-group">
+          <button id="btn-back-leaderboard" class="btn btn-secondary">
+            VOLVER
+          </button>
+        </div>
+
+      </div>
+    </section>
+
+  </div>
+
+  <!-- Scripts en orden de dependencia -->
+  <script src="js/config.js"></script>
+  <script src="js/storage.js"></script>
+  <script src="js/audio.js"></script>
+  <script src="js/assets.js"></script>
+  <script src="js/particles.js"></script>
+  <script src="js/bot.js"></script>
+  <script src="js/game.js"></script>
+  <script src="js/app.js"></script>
+
+</body>
+</html>

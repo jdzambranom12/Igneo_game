@@ -1,0 +1,623 @@
+/* ==========================================================================
+   ÍGNEO: PONG DE FUEGO - Estilos de Interfaz de Usuario (UI)
+   ========================================================================== */
+
+/* Tarjetas Principales */
+.card {
+  background: var(--card-bg);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 2px solid var(--card-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
+  padding: 28px 24px;
+  max-width: 520px;
+  width: 100%;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  position: relative;
+  z-index: 10;
+}
+
+/* Badges e Identificadores */
+.badge-collection {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(255, 61, 0, 0.15);
+  border: 1px solid rgba(255, 87, 34, 0.5);
+  padding: 4px 14px;
+  border-radius: var(--radius-pill);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  color: var(--fire-orange);
+  text-transform: uppercase;
+}
+
+/* Títulos */
+.game-title {
+  font-size: 2.2rem;
+  font-weight: 900;
+  line-height: 1.1;
+  text-transform: uppercase;
+  background: linear-gradient(180deg, #fff7ed 0%, #ffab40 45%, #ff3d00 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 2px 8px rgba(255, 61, 0, 0.5));
+}
+
+.game-subtitle {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+.game-description {
+  font-size: 0.92rem;
+  color: var(--text-muted);
+  line-height: 1.45;
+  margin-top: -4px;
+}
+
+/* Previsualización de Personajes en Menú */
+.versus-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  width: 100%;
+  padding: 10px 0;
+}
+
+.versus-fighter {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+
+.fighter-avatar-wrap {
+  width: 125px;
+  height: 135px;
+  border-radius: var(--radius-md);
+  background: radial-gradient(circle at 50% 40%, rgba(255, 110, 64, 0.25) 0%, rgba(18, 9, 7, 0.95) 100%);
+  border: 2.5px solid var(--fire-orange);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6), 0 0 16px rgba(255, 61, 0, 0.35);
+  transition: transform 0.25s ease;
+  padding: 6px;
+}
+
+.fighter-avatar-wrap.flora-wrap {
+  background: radial-gradient(circle at 50% 40%, rgba(76, 175, 80, 0.25) 0%, rgba(18, 9, 7, 0.95) 100%);
+  border-color: var(--flora-light);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6), 0 0 16px rgba(76, 175, 80, 0.35);
+}
+
+.fighter-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.6));
+}
+
+.fighter-name {
+  font-size: 0.88rem;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+}
+
+.fighter-role {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  font-weight: 600;
+}
+
+.versus-badge {
+  font-size: 1.3rem;
+  font-weight: 900;
+  font-style: italic;
+  color: #ffeb3b;
+  text-shadow: 0 0 12px rgba(255, 235, 59, 0.8);
+}
+
+/* Reglas Rápidas */
+.mini-rules {
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+  background: rgba(0, 0, 0, 0.35);
+  border-radius: var(--radius-md);
+  padding: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.rule-pill {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 0.75rem;
+  gap: 2px;
+}
+
+.rule-icon {
+  font-size: 1.2rem;
+}
+
+.rule-pill strong {
+  color: var(--text-accent);
+}
+
+/* Formulario de Entrada de Nombre */
+.input-group {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+
+.input-label {
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+}
+
+.input-name {
+  width: 100%;
+  max-width: 320px;
+  background: rgba(14, 7, 6, 0.85);
+  border: 2px solid rgba(255, 110, 64, 0.4);
+  border-radius: var(--radius-pill);
+  padding: 12px 20px;
+  font-family: var(--font-main);
+  font-size: 1.05rem;
+  font-weight: 700;
+  text-align: center;
+  color: #ffffff;
+  outline: none;
+  transition: all 0.2s ease;
+  letter-spacing: 1px;
+}
+
+.input-name:focus {
+  border-color: var(--fire-orange);
+  box-shadow: 0 0 15px rgba(255, 87, 34, 0.6);
+  background: rgba(22, 10, 8, 0.95);
+}
+
+.input-name::placeholder {
+  color: rgba(255, 204, 188, 0.4);
+  font-weight: 500;
+}
+
+/* Botones */
+.btn-group {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 12px;
+  align-items: center;
+}
+
+.btn {
+  font-family: var(--font-main);
+  border: none;
+  border-radius: var(--radius-pill);
+  cursor: pointer;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+  transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  text-decoration: none;
+}
+
+.btn-primary {
+  width: 100%;
+  max-width: 320px;
+  padding: 15px 28px;
+  font-size: 1.2rem;
+  background: linear-gradient(135deg, #ff7043 0%, #ff3d00 50%, #d50000 100%);
+  color: #ffffff;
+  box-shadow: 0 6px 20px rgba(255, 61, 0, 0.5), inset 0 2px 2px rgba(255, 255, 255, 0.4);
+  border: 2px solid #ffab91;
+  text-transform: uppercase;
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 10px 28px rgba(255, 61, 0, 0.7), inset 0 2px 4px rgba(255, 255, 255, 0.6);
+}
+
+.btn-primary:active {
+  transform: translateY(1px) scale(0.98);
+}
+
+.btn-secondary {
+  width: 100%;
+  max-width: 320px;
+  padding: 12px 24px;
+  font-size: 0.95rem;
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--text-primary);
+  border: 2px solid rgba(255, 255, 255, 0.18);
+}
+
+.btn-secondary:hover {
+  background: rgba(255, 255, 255, 0.16);
+  border-color: rgba(255, 255, 255, 0.35);
+  transform: translateY(-1px);
+}
+
+.btn-tertiary {
+  background: transparent;
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  padding: 6px 16px;
+}
+
+.btn-tertiary:hover {
+  color: var(--text-primary);
+  text-decoration: underline;
+}
+
+/* Enlaces a la colección de juegos */
+.collection-links {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 4px;
+  flex-wrap: wrap;
+}
+
+.link-pill {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--text-secondary);
+  background: rgba(255, 255, 255, 0.06);
+  padding: 6px 14px;
+  border-radius: var(--radius-pill);
+  text-decoration: none;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  transition: all 0.2s ease;
+}
+
+.link-pill:hover {
+  background: rgba(255, 87, 34, 0.25);
+  border-color: var(--fire-orange);
+  color: #ffffff;
+}
+
+/* HUD Superior en Juego */
+.game-hud {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  padding: 10px 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 5;
+  background: linear-gradient(180deg, rgba(14, 7, 6, 0.85) 0%, rgba(14, 7, 6, 0.3) 70%, transparent 100%);
+  pointer-events: none;
+}
+
+.game-hud > * {
+  pointer-events: auto;
+}
+
+.hud-left, .hud-right, .hud-center {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.hud-badge {
+  background: rgba(24, 12, 10, 0.85);
+  border: 1.5px solid rgba(255, 87, 34, 0.4);
+  padding: 6px 14px;
+  border-radius: var(--radius-pill);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+}
+
+.hud-label {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.hud-value {
+  font-size: 1.15rem;
+  font-weight: 900;
+  color: #ffffff;
+}
+
+/* Indicador de Vidas (Exactamente 3) */
+.lives-box {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.life-flame {
+  font-size: 1.35rem;
+  filter: drop-shadow(0 0 6px #ff3d00);
+  transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.3s ease;
+}
+
+.life-flame.lost {
+  opacity: 0.22;
+  filter: grayscale(1);
+  transform: scale(0.75);
+}
+
+.bot-life {
+  font-size: 1.2rem;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.bot-life.lost {
+  opacity: 0.22;
+  filter: grayscale(1);
+  transform: scale(0.75);
+}
+
+/* Multiplicador de Combo */
+.combo-badge {
+  font-size: 0.78rem;
+  font-weight: 900;
+  padding: 2px 8px;
+  border-radius: var(--radius-sm);
+  background: #ff3d00;
+  color: #fff;
+  transition: transform 0.2s;
+}
+
+.combo-badge.active {
+  animation: pulseGlow 0.8s infinite;
+}
+
+/* Botones de Control en HUD */
+.hud-btn {
+  background: rgba(24, 12, 10, 0.85);
+  border: 1.5px solid rgba(255, 255, 255, 0.2);
+  color: #ffffff;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.hud-btn:hover {
+  background: rgba(255, 87, 34, 0.3);
+  border-color: var(--fire-orange);
+  transform: scale(1.08);
+}
+
+/* Modales */
+.modal-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(10, 4, 3, 0.85);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 20;
+  padding: 20px;
+}
+
+/* Pantalla de Fin de Partida / Derrota */
+.result-card {
+  max-width: 500px;
+}
+
+.result-badge-record {
+  background: linear-gradient(135deg, #ffd700 0%, #ff8f00 100%);
+  color: #210d06;
+  font-weight: 900;
+  font-size: 0.85rem;
+  padding: 5px 16px;
+  border-radius: var(--radius-pill);
+  letter-spacing: 1px;
+  box-shadow: 0 0 15px rgba(255, 215, 0, 0.6);
+  animation: pulseGlow 1.2s infinite;
+}
+
+.result-score-highlight {
+  background: rgba(0, 0, 0, 0.4);
+  border: 2px solid rgba(255, 87, 34, 0.4);
+  border-radius: var(--radius-md);
+  padding: 14px 28px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+}
+
+.result-score-highlight .label {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.result-score-highlight .val {
+  font-size: 2.8rem;
+  font-weight: 900;
+  color: #ffeb3b;
+  text-shadow: 0 0 20px rgba(255, 235, 59, 0.5);
+  line-height: 1.1;
+}
+
+.result-stats-row {
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+}
+
+/* Pantalla de Ranking / Leaderboard */
+.leaderboard-card {
+  max-width: 580px;
+}
+
+.leaderboard-table-wrap {
+  width: 100%;
+  max-height: 380px;
+  overflow-y: auto;
+  border-radius: var(--radius-md);
+  border: 1px solid rgba(255, 87, 34, 0.25);
+  background: rgba(12, 6, 5, 0.7);
+}
+
+.leaderboard-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  font-size: 0.9rem;
+}
+
+.leaderboard-table th {
+  background: rgba(255, 87, 34, 0.2);
+  color: var(--text-accent);
+  padding: 12px 14px;
+  font-weight: 800;
+  text-transform: uppercase;
+  font-size: 0.76rem;
+  letter-spacing: 1px;
+  position: sticky;
+  top: 0;
+  z-index: 2;
+}
+
+.leaderboard-table td {
+  padding: 12px 14px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  font-weight: 600;
+}
+
+.leaderboard-table tr:hover {
+  background: rgba(255, 87, 34, 0.1);
+}
+
+.leaderboard-table .rank-top {
+  background: rgba(255, 215, 0, 0.08);
+  font-weight: 800;
+}
+
+.leaderboard-table .rank-top td:first-child {
+  color: #ffd700;
+}
+
+.rank-col {
+  width: 55px;
+  text-align: center;
+  font-weight: 800;
+}
+
+.score-col {
+  text-align: right;
+  color: #ffcc80;
+  font-weight: 800;
+}
+
+.date-col {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  text-align: right;
+  width: 95px;
+}
+
+.empty-leaderboard {
+  padding: 40px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  color: var(--text-muted);
+}
+
+.empty-icon {
+  font-size: 2.5rem;
+}
+
+/* Responsividad */
+@media (max-width: 600px) {
+  .game-hud {
+    flex-wrap: wrap;
+    gap: 5px;
+    padding: 8px 10px;
+  }
+  .hud-left { order: 1; }
+  .hud-right { order: 2; }
+  .hud-center {
+    order: 3;
+    flex-basis: 100%;
+    justify-content: space-between;
+    gap: 4px;
+  }
+  .hud-center .hud-badge {
+    padding: 4px 5px;
+    gap: 3px;
+  }
+  .hud-center .hud-label { font-size: 0.58rem; }
+  .bot-life { font-size: 1rem; }
+  .game-title {
+    font-size: 1.8rem;
+  }
+  .card {
+    padding: 20px 16px;
+    gap: 12px;
+  }
+  .fighter-avatar-wrap {
+    width: 82px;
+    height: 82px;
+  }
+  .versus-container {
+    gap: 10px;
+  }
+  .btn-primary {
+    font-size: 1.05rem;
+    padding: 12px 20px;
+  }
+  .hud-badge {
+    padding: 4px 10px;
+  }
+  .hud-value {
+    font-size: 1rem;
+  }
+  .life-flame {
+    font-size: 1.15rem;
+  }
+}
